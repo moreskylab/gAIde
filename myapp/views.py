@@ -3,7 +3,7 @@ from django.http import HttpRequest, HttpResponse
 from .agent import coder_agent
 
 
-async def chat_view(request: HttpRequest) -> HttpResponse:
+def chat_view(request: HttpRequest) -> HttpResponse:
     context = {}
 
     if request.method == "POST":
@@ -13,7 +13,7 @@ async def chat_view(request: HttpRequest) -> HttpResponse:
             try:
                 # Run the agent asynchronously
                 # PydanticAI handles the validation internally
-                result = await coder_agent.run(user_prompt)
+                result = coder_agent.run_sync(user_prompt)
 
                 # result.data is an instance of the CodeResponse Pydantic model
                 context['response'] = result.data
