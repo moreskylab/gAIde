@@ -2,7 +2,13 @@ import os
 from typing import List
 from pydantic import BaseModel, Field
 from pydantic_ai import Agent
-from pydantic_ai.models.openai import OpenAIModel
+# from pydantic_ai.models.openai import OpenAIModel
+from pydantic_ai.models.openai import OpenAIChatModel
+from pydantic_ai.providers.ollama import OllamaProvider
+
+provider = OllamaProvider(
+    base_url='http://localhost:11434/v1'
+)
 
 # 1. Define the Data Model
 class CodeResponse(BaseModel):
@@ -13,16 +19,15 @@ class CodeResponse(BaseModel):
 
 # 2. Configure the Model (Ollama acts as an OpenAI-compatible endpoint)
 # We use a dummy API key because Ollama doesn't require one, but the client expects it.
-model = OpenAIModel(
+model = OpenAIChatModel(
     'deepseek-coder-v2:lite',
-    base_url='http://localhost:11434/v1',
-    api_key='ollama'
+    provider=provider
 )
 
 # 3. Initialize the Agent
 coder_agent = Agent(
     model,
-    result_type=CodeResponse,
+    output_type=CodeResponse,
     system_prompt=(
         "You are a local coding assistant specialized in providing structured, type-safe code snippets. "
         "Always return the response in the requested JSON structure. "
