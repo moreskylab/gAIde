@@ -14,7 +14,7 @@ class CodeResponse(BaseModel):
 # 2. Configure the Model (Ollama acts as an OpenAI-compatible endpoint)
 # We use a dummy API key because Ollama doesn't require one, but the client expects it.
 model = OpenAIModel(
-    'deepseek-coder-v2',
+    'deepseek-coder-v2:lite',
     base_url='http://localhost:11434/v1',
     api_key='ollama'
 )
