@@ -23,4 +23,4 @@ async def chat_view(request: HttpRequest) -> HttpResponse:
                 # Handle connection errors (e.g., Ollama not running) or validation errors
                 context['error'] = f"Error processing request: {str(e)}"
 
-    return render(request, "chat.html", context)
+    return render(request, "myapp/chat.html", context)
